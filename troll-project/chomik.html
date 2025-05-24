@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>You’ve Been Trolled</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    img {
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+      cursor: pointer;
+    }
+    #qr {
+      margin-top: 20px;
+      display: none;
+    }
+    #instruction {
+      margin-top: 15px;
+      font-style: italic;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>😈 You’ve Been Trolled 😈</h1>
+
+  <!-- Troll Face - kliknij, żeby odtworzyć -->
+  <img src="https://i.kym-cdn.com/entries/icons/original/000/000/091/TrollFace.jpg" alt="Troll Face" id="troll">
+
+  <div id="instruction">Kliknij na obrazek, aby odtworzyć piosenkę.</div>
+
+  <!-- Audio, bez autoplay -->
+  <audio id="trollAudio">
+    <source src="Youve-been-Trolled.mp3" type="audio/mpeg">
+    Twoja przeglądarka nie obsługuje elementu audio.
+  </audio>
+
+  <!-- Kod QR po zakończeniu piosenki -->
+  <div id="qr"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    const audio = document.getElementById('trollAudio');
+    const trollImg = document.getElementById('troll');
+    const instruction = document.getElementById('instruction');
+    const qrDiv = document.getElementById('qr');
+
+    // Kliknięcie na obrazek - start odtwarzania
+    trollImg.addEventListener('click', () => {
+      audio.play().catch(err => {
+        alert("Nie udało się odtworzyć audio automatycznie. Proszę spróbuj kliknąć jeszcze raz.");
+      });
+      instruction.style.display = 'none';
+    });
+
+    audio.onended = () => {
+      qrDiv.style.display = 'block';
+      new QRCode(qrDiv, {
+        text: "https://youtu.be/3NePKhZtBfc",
+        width: 200,
+        height: 200
+      });
+    };
+  </script>
+</body>
+</html>
